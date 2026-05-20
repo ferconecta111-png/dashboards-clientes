@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Maria Elena Badillo — Histórico Pauta 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',sans-serif; background:#0f1117; color:#e2e8f0; }
+
+  .header { background:linear-gradient(135deg,#1a1f3c,#4a1d6e); padding:28px 40px; border-bottom:1px solid #2d3748; }
+  .header h1 { font-size:24px; font-weight:700; color:#fff; }
+  .header p { color:#94a3b8; font-size:13px; margin-top:4px; }
+  .badge { display:inline-block; padding:3px 12px; border-radius:20px; font-size:11px; font-weight:700; margin-left:10px; background:#a855f722; color:#a855f7; border:1px solid #a855f744; }
+
+  .container { max-width:1180px; margin:0 auto; padding:28px 24px; }
+  .section-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:#64748b; margin:28px 0 14px; }
+
+  /* KPIs */
+  .kpi-grid-5 { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:24px; }
+  .kpi-grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:24px; }
+  .kpi { background:#1e2330; border-radius:10px; padding:18px 20px; border:1px solid #2d3748; }
+  .kpi .label { font-size:11px; color:#64748b; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+  .kpi .value { font-size:24px; font-weight:700; color:#fff; margin:6px 0 3px; }
+  .kpi .sub { font-size:12px; color:#64748b; }
+  .kpi .change { font-size:12px; font-weight:700; margin-top:3px; }
+  .up { color:#22c55e; } .down { color:#ef4444; } .neu { color:#94a3b8; } .warn { color:#f59e0b; }
+  .kpi.good { border-color:#22c55e44; background:#22c55e08; }
+  .kpi.bad { border-color:#ef444440; background:#ef444408; }
+  .kpi.purple { border-color:#a855f744; background:#a855f708; }
+
+  /* Charts */
+  .charts-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+  .chart-full { margin-bottom:20px; }
+  .chart-card { background:#1e2330; border-radius:10px; border:1px solid #2d3748; padding:22px; }
+  .chart-card h3 { font-size:13px; font-weight:700; color:#fff; margin-bottom:16px; }
+
+  /* Table */
+  .comp-table { width:100%; border-collapse:collapse; background:#1e2330; border-radius:10px; overflow:hidden; border:1px solid #2d3748; margin-bottom:20px; }
+  .comp-table th { background:#2d3748; padding:10px 14px; font-size:11px; font-weight:700; text-transform:uppercase; color:#94a3b8; text-align:left; }
+  .comp-table td { padding:11px 14px; font-size:12px; border-top:1px solid #2d374840; }
+  .comp-table tr:hover td { background:#ffffff05; }
+  .td-name { color:#e2e8f0; font-weight:600; }
+  .td-num { text-align:right; color:#94a3b8; }
+  .td-good { text-align:right; color:#22c55e; font-weight:700; }
+  .td-bad { text-align:right; color:#ef4444; font-weight:700; }
+  .td-warn { text-align:right; color:#f59e0b; font-weight:700; }
+  .tag-es { display:inline-block; padding:2px 7px; border-radius:10px; font-size:10px; background:#ef444420; color:#ef4444; margin-left:6px; }
+  .tag-pe { display:inline-block; padding:2px 7px; border-radius:10px; font-size:10px; background:#3b82f620; color:#3b82f6; margin-left:6px; }
+  .tag-co { display:inline-block; padding:2px 7px; border-radius:10px; font-size:10px; background:#22c55e20; color:#22c55e; margin-left:6px; }
+
+  /* Separator */
+  .separator { display:flex; align-items:center; gap:12px; margin:28px 0 16px; }
+  .separator .line { flex:1; height:1px; background:#2d3748; }
+  .sep-tag { font-size:12px; font-weight:700; padding:4px 14px; border-radius:20px; }
+
+  /* Insights */
+  .insight { display:flex; gap:14px; padding:14px; border-radius:8px; margin-bottom:10px; }
+  .insight.good { background:#22c55e0d; border-left:3px solid #22c55e; }
+  .insight.bad { background:#ef44440d; border-left:3px solid #ef4444; }
+  .insight.info { background:#3b82f60d; border-left:3px solid #3b82f6; }
+  .insight.warn { background:#f59e0b0d; border-left:3px solid #f59e0b; }
+  .insight .ico { font-size:20px; flex-shrink:0; }
+  .insight strong { font-size:13px; color:#fff; display:block; margin-bottom:3px; }
+  .insight span { font-size:12px; color:#94a3b8; line-height:1.6; }
+
+  .footer { text-align:center; padding:20px; color:#334155; font-size:12px; border-top:1px solid #1e2330; margin-top:20px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Psicóloga Maria Elena Badillo <span class="badge">Histórico 2026</span></h1>
+  <p>act_1418379029648107 (COP) &nbsp;·&nbsp; Enero — Mayo 2026 &nbsp;·&nbsp; 5 meses de pauta analizados</p>
+</div>
+
+<div class="container">
+
+  <!-- KPIs GLOBALES -->
+  <div class="section-title">Resumen Acumulado Enero — Mayo 2026</div>
+  <div class="kpi-grid-5">
+    <div class="kpi purple">
+      <div class="label">Gasto Total</div>
+      <div class="value">$6.17M</div>
+      <div class="sub">COP acumulado</div>
+      <div class="change neu">5 meses</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Gasto Promedio/Mes</div>
+      <div class="value">$1.23M</div>
+      <div class="sub">Mensual</div>
+      <div class="change neu">Sin mayo completo</div>
+    </div>
+    <div class="kpi good">
+      <div class="label">Mejor CPC Logrado</div>
+      <div class="value">$23.5</div>
+      <div class="sub">Mar — Terapias Colombia</div>
+      <div class="change up">↑ Máxima eficiencia</div>
+    </div>
+    <div class="kpi bad">
+      <div class="label">Peor CPC Registrado</div>
+      <div class="value">$2,525</div>
+      <div class="sub">Ene — España IG</div>
+      <div class="change down">↓ España muy cara</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Total Convs. WhatsApp</div>
+      <div class="value">977</div>
+      <div class="sub">Sin pixel Purchase</div>
+      <div class="change neu">Tracking manual</div>
+    </div>
+  </div>
+
+  <!-- GASTO Y CONVS POR MES -->
+  <div class="section-title">Evolución Mensual</div>
+  <div class="charts-2">
+    <div class="chart-card">
+      <h3>Gasto mensual (COP)</h3>
+      <canvas id="chartGasto" height="200"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Conversaciones WhatsApp por mes</h3>
+      <canvas id="chartConvs" height="200"></canvas>
+    </div>
+  </div>
+
+  <div class="charts-2">
+    <div class="chart-card">
+      <h3>CPC promedio mensual</h3>
+      <canvas id="chartCPC" height="200"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>CTR promedio mensual</h3>
+      <canvas id="chartCTR" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- DESGLOSE POR CAMPAÑA -->
+  <div class="separator">
+    <div class="line"></div>
+    <span class="sep-tag" style="background:#3b82f622;color:#3b82f6;border:1px solid #3b82f644">PERÚ / COLOMBIA — Campañas eficientes</span>
+    <div class="line"></div>
+  </div>
+
+  <table class="comp-table">
+    <tr>
+      <th>Campaña</th>
+      <th style="text-align:right">Ene</th>
+      <th style="text-align:right">Feb</th>
+      <th style="text-align:right">Mar</th>
+      <th style="text-align:right">Abr</th>
+      <th style="text-align:right">May 1-19</th>
+      <th style="text-align:right">WA Total</th>
+      <th style="text-align:right">Mejor CPC</th>
+    </tr>
+    <tr>
+      <td class="td-name">SPM RMK PERÚ <span class="tag-pe">PE</span></td>
+      <td class="td-num">$496K</td>
+      <td class="td-num">$335K</td>
+      <td class="td-good">$564K</td>
+      <td class="td-num">—</td>
+      <td class="td-num">—</td>
+      <td class="td-good">321</td>
+      <td class="td-good">$33.6</td>
+    </tr>
+    <tr>
+      <td class="td-name">RMK CTCTC <span class="tag-pe">PE</span></td>
+      <td class="td-num">—</td>
+      <td class="td-num">—</td>
+      <td class="td-good">$395K</td>
+      <td class="td-num">—</td>
+      <td class="td-num">—</td>
+      <td class="td-good">139</td>
+      <td class="td-good">$79.1</td>
+    </tr>
+    <tr>
+      <td class="td-name">Terapias <span class="tag-co">CO</span></td>
+      <td class="td-num">—</td>
+      <td class="td-num">—</td>
+      <td class="td-good">$250K</td>
+      <td class="td-num">$277K</td>
+      <td class="td-num">—</td>
+      <td class="td-good">77</td>
+      <td class="td-good">$23.5</td>
+    </tr>
+    <tr>
+      <td class="td-name">WhatsApp Terapias <span class="tag-co">CO</span></td>
+      <td class="td-num">—</td>
+      <td class="td-num">—</td>
+      <td class="td-num">—</td>
+      <td class="td-good">$557K</td>
+      <td class="td-num">—</td>
+      <td class="td-good">60</td>
+      <td class="td-good">$49.3</td>
+    </tr>
+    <tr>
+      <td class="td-name">Nuevos Seguidores MEB <span class="tag-co">CO</span></td>
+      <td class="td-num">—</td>
+      <td class="td-num">—</td>
+      <td class="td-num">—</td>
+      <td class="td-num">$441K</td>
+      <td class="td-good">$776K</td>
+      <td class="td-good">193</td>
+      <td class="td-good">$73.5</td>
+    </tr>
+    <tr>
+      <td class="td-name">RMK PERÚ <span class="tag-pe">PE</span></td>
+      <td class="td-num">$224K</td>
+      <td class="td-num">$29K</td>
+      <td class="td-num">—</td>
+      <td class="td-num">—</td>
+      <td class="td-num">—</td>
+      <td class="td-num">65</td>
+      <td class="td-warn">$414</td>
+    </tr>
+  </table>
+
+  <div class="separator">
+    <div class="line"></div>
+    <span class="sep-tag" style="background:#ef444422;color:#ef4444;border:1px solid #ef444444">ESPAÑA / MADRID — Campañas caras, pausadas</span>
+    <div class="line"></div>
+  </div>
+
+  <table class="comp-table">
+    <tr>
+      <th>Campaña</th>
+      <th style="text-align:right">Ene</th>
+      <th style="text-align:right">Feb</th>
+      <th style="text-align:right">Mar</th>
+      <th style="text-align:right">WA Total</th>
+      <th style="text-align:right">CPC</th>
+      <th style="text-align:right">Estado</th>
+    </tr>
+    <tr>
+      <td class="td-name">Visitas Perfil Madrid <span class="tag-es">ES</span></td>
+      <td class="td-num">$397K</td>
+      <td class="td-num">$553K</td>
+      <td class="td-num">—</td>
+      <td class="td-bad">0</td>
+      <td class="td-bad">$143–307</td>
+      <td class="td-bad">PAUSADA</td>
+    </tr>
+    <tr>
+      <td class="td-name">SPM Wap España <span class="tag-es">ES</span></td>
+      <td class="td-num">$67K</td>
+      <td class="td-num">$223K</td>
+      <td class="td-num">—</td>
+      <td class="td-bad">0</td>
+      <td class="td-bad">$932–1,678</td>
+      <td class="td-bad">PAUSADA</td>
+    </tr>
+    <tr>
+      <td class="td-name">RMK España <span class="tag-es">ES</span></td>
+      <td class="td-num">—</td>
+      <td class="td-num">$143K</td>
+      <td class="td-num">—</td>
+      <td class="td-warn">3</td>
+      <td class="td-bad">$1,498</td>
+      <td class="td-bad">PAUSADA</td>
+    </tr>
+    <tr>
+      <td class="td-name">SPM España IG <span class="tag-es">ES</span></td>
+      <td class="td-num">$32K</td>
+      <td class="td-num">—</td>
+      <td class="td-num">—</td>
+      <td class="td-bad">0</td>
+      <td class="td-bad">$2,525</td>
+      <td class="td-bad">PAUSADA</td>
+    </tr>
+    <tr>
+      <td class="td-name">SPM Sitio Web España <span class="tag-es">ES</span></td>
+      <td class="td-num">$126K</td>
+      <td class="td-num">—</td>
+      <td class="td-num">—</td>
+      <td class="td-warn">1</td>
+      <td class="td-bad">$906</td>
+      <td class="td-bad">PAUSADA</td>
+    </tr>
+  </table>
+
+  <!-- CONCLUSIONES -->
+  <div class="section-title">Análisis y Conclusiones</div>
+
+  <div class="insight bad">
+    <div class="ico">🇪🇸</div>
+    <div>
+      <strong>España consumió $1.54M y generó casi cero conversaciones</strong>
+      <span>Entre enero y febrero se gastaron $1,543,649 COP en campañas de Madrid y España. CPC entre $907 y $2,525 — 10 a 100 veces más caro que Colombia/Perú. 0 conversaciones de WhatsApp registradas. Correctamente pausadas.</span>
+    </div>
+  </div>
+
+  <div class="insight good">
+    <div class="ico">🚀</div>
+    <div>
+      <strong>Marzo fue el punto de inflexión — eficiencia máxima</strong>
+      <span>Se abandonó España y se enfocó en Perú (SPM RMK PERU: CPC $33.6) y Colombia (Terapias: CPC $23.5). Mejor mes en eficiencia de toda la historia analizada. 223 conversaciones en un solo mes.</span>
+    </div>
+  </div>
+
+  <div class="insight warn">
+    <div class="ico">📊</div>
+    <div>
+      <strong>Abril cambió de estrategia: terapias + nuevos seguidores</strong>
+      <span>Se lanzaron 4 campañas simultáneas en Colombia. WhatsApp Terapias logró CTR 13.6% y CPC $49 — excelente. La campaña de Nuevos Seguidores es la única activa en mayo.</span>
+    </div>
+  </div>
+
+  <div class="insight bad">
+    <div class="ico">⚠️</div>
+    <div>
+      <strong>Sin pixel de Purchase instalado — tracking incompleto</strong>
+      <span>No hay dato de compras reales en Meta. Todas las conversiones se miden por WhatsApp abierto. Instalar el pixel de Purchase permitiría saber exactamente cuántas ventas generó cada campaña y optimizar por ROAS.</span>
+    </div>
+  </div>
+
+  <div class="insight info">
+    <div class="ico">✅</div>
+    <div>
+      <strong>Recomendación: mantener Colombia, testear Perú de nuevo</strong>
+      <span>La campaña activa (Nuevos Seguidores) está funcionando bien — CTR 5.9%, CPC $98. Reactivar SPM RMK Perú que demostró CPC $33 en marzo. No volver a España hasta que el costo baje o se tenga una oferta específica para ese mercado.</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">ClaudePM · Maria Elena Badillo · act_1418379029648107 · Mayo 2026</div>
+
+<script>
+const meses = ['Ene 2026','Feb 2026','Mar 2026','Abr 2026','May 1-19'];
+const opt = {
+  plugins:{ legend:{ labels:{ color:'#94a3b8', font:{size:11} } } },
+  scales:{
+    x:{ ticks:{color:'#64748b'}, grid:{color:'#2d374830'} },
+    y:{ ticks:{color:'#64748b'}, grid:{color:'#2d374830'} }
+  }
+};
+
+// Gasto mensual
+new Chart(document.getElementById('chartGasto'),{
+  type:'bar',
+  data:{
+    labels: meses,
+    datasets:[{
+      label:'Gasto COP',
+      data:[1438292, 1393899, 1210661, 1350553, 776038],
+      backgroundColor:['#ef444455','#ef444455','#22c55e88','#3b82f688','#a855f788'],
+      borderColor:['#ef4444','#ef4444','#22c55e','#3b82f6','#a855f7'],
+      borderWidth:2, borderRadius:6
+    }]
+  },
+  options:{...opt, plugins:{...opt.plugins, tooltip:{callbacks:{label:c=>'$'+c.raw.toLocaleString()+' COP'}}}}
+});
+
+// Conversaciones WA
+new Chart(document.getElementById('chartConvs'),{
+  type:'bar',
+  data:{
+    labels: meses,
+    datasets:[{
+      label:'Convs. WhatsApp',
+      data:[250, 92, 223, 170, 132],
+      backgroundColor:['#3b82f655','#3b82f655','#22c55e88','#3b82f688','#a855f788'],
+      borderColor:['#3b82f6','#3b82f6','#22c55e','#3b82f6','#a855f7'],
+      borderWidth:2, borderRadius:6
+    }]
+  },
+  options:{...opt}
+});
+
+// CPC promedio (weighted estimate)
+new Chart(document.getElementById('chartCPC'),{
+  type:'line',
+  data:{
+    labels: meses,
+    datasets:[{
+      label:'CPC Promedio COP',
+      data:[780, 808, 45, 109, 98],
+      borderColor:'#22c55e',
+      backgroundColor:'#22c55e22',
+      fill:true, tension:0.4, pointRadius:5,
+      pointBackgroundColor:'#22c55e'
+    }]
+  },
+  options:{...opt, scales:{...opt.scales, y:{...opt.scales.y, ticks:{color:'#64748b', callback:v=>'$'+v}}}}
+});
+
+// CTR promedio
+new Chart(document.getElementById('chartCTR'),{
+  type:'line',
+  data:{
+    labels: meses,
+    datasets:[{
+      label:'CTR Promedio %',
+      data:[3.8, 3.9, 12.5, 9.5, 5.9],
+      borderColor:'#a855f7',
+      backgroundColor:'#a855f722',
+      fill:true, tension:0.4, pointRadius:5,
+      pointBackgroundColor:'#a855f7'
+    }]
+  },
+  options:{...opt, scales:{...opt.scales, y:{...opt.scales.y, ticks:{color:'#64748b', callback:v=>v+'%'}}}}
+});
+</script>
+</body>
+</html>
