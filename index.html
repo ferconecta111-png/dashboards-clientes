@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Columna Vital 2 — Análisis Quincena Mayo 2026</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Segoe UI',sans-serif; background:#0f1117; color:#e2e8f0; }
+
+  .header { background:linear-gradient(135deg,#1a1f3c,#0d3b6e); padding:28px 40px; border-bottom:1px solid #2d3748; }
+  .header h1 { font-size:24px; font-weight:700; color:#fff; }
+  .header p { color:#94a3b8; font-size:13px; margin-top:4px; }
+
+  .container { max-width:1180px; margin:0 auto; padding:28px 24px; }
+  .section-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:#64748b; margin:28px 0 14px; }
+
+  /* ALERT BOX */
+  .alert { background:#ef444415; border:1px solid #ef444440; border-left:4px solid #ef4444; border-radius:10px; padding:20px 24px; margin-bottom:28px; }
+  .alert h2 { font-size:16px; color:#ef4444; font-weight:700; margin-bottom:8px; }
+  .alert p { font-size:13px; color:#94a3b8; line-height:1.7; }
+  .alert strong { color:#e2e8f0; }
+
+  /* ANSWER BOX */
+  .answer { background:#22c55e12; border:1px solid #22c55e35; border-left:4px solid #22c55e; border-radius:10px; padding:20px 24px; margin-bottom:28px; }
+  .answer h2 { font-size:15px; color:#22c55e; font-weight:700; margin-bottom:12px; }
+  .answer-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .answer-item { background:#22c55e0a; border-radius:8px; padding:14px 16px; }
+  .answer-item .q { font-size:11px; color:#64748b; font-weight:700; text-transform:uppercase; margin-bottom:6px; }
+  .answer-item .a { font-size:13px; color:#e2e8f0; line-height:1.6; }
+  .answer-item strong { color:#22c55e; }
+
+  /* SEPARATOR */
+  .separator { display:flex; align-items:center; gap:12px; margin:28px 0 20px; }
+  .separator .line { flex:1; height:1px; background:#2d3748; }
+  .separator .tag { font-size:12px; font-weight:700; padding:4px 14px; border-radius:20px; }
+  .tag-cv { background:#3b82f622; color:#3b82f6; border:1px solid #3b82f644; }
+  .tag-fv { background:#f59e0b22; color:#f59e0b; border:1px solid #f59e0b44; }
+
+  /* KPI grids */
+  .kpi-grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:20px; }
+  .kpi-grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:20px; }
+  .kpi { background:#1e2330; border-radius:10px; padding:18px 20px; border:1px solid #2d3748; }
+  .kpi .label { font-size:11px; color:#64748b; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+  .kpi .value { font-size:26px; font-weight:700; color:#fff; margin:6px 0 3px; }
+  .kpi .prev { font-size:12px; color:#64748b; }
+  .kpi .change { font-size:12px; font-weight:700; margin-top:2px; }
+  .up { color:#22c55e; } .down { color:#ef4444; } .neu { color:#94a3b8; }
+  .kpi.highlight { border-color:#22c55e55; background:#22c55e08; }
+  .kpi.danger { border-color:#ef444440; background:#ef444408; }
+  .kpi.warn { border-color:#f59e0b40; background:#f59e0b08; }
+
+  /* Comparison table */
+  .comp-table { width:100%; border-collapse:collapse; background:#1e2330; border-radius:10px; overflow:hidden; border:1px solid #2d3748; margin-bottom:20px; }
+  .comp-table th { background:#2d3748; padding:10px 16px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#94a3b8; text-align:left; }
+  .comp-table td { padding:12px 16px; font-size:13px; border-top:1px solid #2d374850; }
+  .comp-table tr:hover td { background:#ffffff05; }
+  .comp-table .metric { color:#94a3b8; font-weight:600; }
+  .comp-table .num { color:#e2e8f0; font-weight:600; text-align:right; }
+  .comp-table .better { color:#22c55e; font-weight:700; }
+  .comp-table .worse { color:#ef4444; font-weight:700; }
+  .comp-table .same { color:#94a3b8; }
+
+  /* Charts */
+  .charts-2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+  .chart-card { background:#1e2330; border-radius:10px; border:1px solid #2d3748; padding:20px; }
+  .chart-card h3 { font-size:13px; font-weight:700; color:#fff; margin-bottom:16px; }
+
+  /* Conclusions */
+  .insight { display:flex; gap:14px; padding:14px; border-radius:8px; margin-bottom:10px; align-items:flex-start; }
+  .insight.good { background:#22c55e0d; border-left:3px solid #22c55e; }
+  .insight.bad { background:#ef44440d; border-left:3px solid #ef4444; }
+  .insight.info { background:#3b82f60d; border-left:3px solid #3b82f6; }
+  .insight.warn { background:#f59e0b0d; border-left:3px solid #f59e0b; }
+  .insight .ico { font-size:20px; flex-shrink:0; margin-top:1px; }
+  .insight strong { font-size:13px; color:#fff; display:block; margin-bottom:3px; }
+  .insight span { font-size:12px; color:#94a3b8; line-height:1.6; }
+
+  .footer { text-align:center; padding:20px; color:#334155; font-size:12px; border-top:1px solid #1e2330; margin-top:20px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Columna Vital 2 — Diagnóstico Quincena Mayo 2026</h1>
+  <p>act_1580150792635428 (COP) &nbsp;·&nbsp; Comparativo: Abr 1–15 vs May 1–15 &nbsp;·&nbsp; 3 campañas analizadas</p>
+</div>
+
+<div class="container">
+
+  <!-- PREGUNTA PRINCIPAL -->
+  <div class="alert">
+    <h2>La pregunta: ¿Por qué más gasto y menos ventas (-40%)?</h2>
+    <p>En mayo aparece <strong>más gasto visible</strong> porque se lanzó una campaña nueva (Fundación Vital / Terapeutas). Sin embargo, el presupuesto de <strong>Columna Vital bajó $222K</strong> vs la primera quincena de abril — eso explica la caída en conversaciones y ventas.</p>
+  </div>
+
+  <div class="answer">
+    <h2>Respuesta directa para la reunión</h2>
+    <div class="answer-grid">
+      <div class="answer-item">
+        <div class="q">¿Por qué parece que gastamos más?</div>
+        <div class="a">Porque se sumó una <strong>campaña nueva para Fundación Vital</strong> ($178K en 15 días). El gasto de Columna Vital en realidad bajó 22%.</div>
+      </div>
+      <div class="answer-item">
+        <div class="q">¿Por qué bajaron las ventas?</div>
+        <div class="a">Menos presupuesto en Columna Vital → <strong>menos conversaciones WhatsApp (-17%)</strong>. Si las ventas cayeron 40%, la diferencia restante es cierre del equipo de ventas.</div>
+      </div>
+      <div class="answer-item">
+        <div class="q">¿Las campañas están funcionando mal?</div>
+        <div class="a"><strong>No — al contrario.</strong> El CPC bajó 25% y el CTR subió 31% en mayo. Los anuncios son más eficientes que en abril.</div>
+      </div>
+      <div class="answer-item">
+        <div class="q">¿Qué hacer ahora?</div>
+        <div class="a"><strong>Subir presupuesto de Columna Vital</strong> a los niveles de abril y revisar el proceso de cierre de ventas con el equipo.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLUMNA VITAL -->
+  <div class="separator">
+    <div class="line"></div>
+    <span class="tag tag-cv">COLUMNA VITAL — IG + Tráfico Sincelejo</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="section-title">Quincena vs Quincena — Solo Columna Vital</div>
+  <div class="kpi-grid-4">
+    <div class="kpi danger">
+      <div class="label">Gasto CV</div>
+      <div class="value">$780K</div>
+      <div class="prev">Abr 1-15: $1,002K</div>
+      <div class="change down">↓ -22% menos inversión</div>
+    </div>
+    <div class="kpi danger">
+      <div class="label">Conversaciones WA</div>
+      <div class="value">361</div>
+      <div class="prev">Abr 1-15: 434</div>
+      <div class="change down">↓ -17% menos chats</div>
+    </div>
+    <div class="kpi highlight">
+      <div class="label">CTR Promedio</div>
+      <div class="value">5.30%</div>
+      <div class="prev">Abr 1-15: 3.06%</div>
+      <div class="change up">↑ +73% mejor</div>
+    </div>
+    <div class="kpi highlight">
+      <div class="label">CPC Promedio</div>
+      <div class="value">$73</div>
+      <div class="prev">Abr 1-15: $117</div>
+      <div class="change up">↓ -38% más eficiente</div>
+    </div>
+  </div>
+
+  <table class="comp-table">
+    <tr>
+      <th>Métrica</th>
+      <th style="text-align:right">Abr 1–15</th>
+      <th style="text-align:right">May 1–15</th>
+      <th style="text-align:right">Cambio</th>
+    </tr>
+    <tr>
+      <td class="metric">Gasto IG Sincelejo</td>
+      <td class="num">$805,086</td>
+      <td class="num">$625,493</td>
+      <td class="num worse">↓ -$179,593</td>
+    </tr>
+    <tr>
+      <td class="metric">Gasto Tráfico Sincelejo</td>
+      <td class="num">$197,144</td>
+      <td class="num">$154,110</td>
+      <td class="num worse">↓ -$43,034</td>
+    </tr>
+    <tr>
+      <td class="metric" style="font-weight:700;color:#e2e8f0">TOTAL Columna Vital</td>
+      <td class="num" style="font-weight:700">$1,002,230</td>
+      <td class="num" style="font-weight:700">$779,603</td>
+      <td class="num worse" style="font-weight:700">↓ -22%</td>
+    </tr>
+    <tr>
+      <td class="metric">Alcance IG Sincelejo</td>
+      <td class="num">62,592</td>
+      <td class="num">71,189</td>
+      <td class="num better">↑ +14%</td>
+    </tr>
+    <tr>
+      <td class="metric">CTR IG Sincelejo</td>
+      <td class="num">3.31%</td>
+      <td class="num">4.34%</td>
+      <td class="num better">↑ +31%</td>
+    </tr>
+    <tr>
+      <td class="metric">CPC IG Sincelejo</td>
+      <td class="num">$138.9</td>
+      <td class="num">$104.4</td>
+      <td class="num better">↓ -25%</td>
+    </tr>
+    <tr>
+      <td class="metric">CTR Tráfico Sincelejo</td>
+      <td class="num">2.81%</td>
+      <td class="num">6.26%</td>
+      <td class="num better">↑ +123%</td>
+    </tr>
+    <tr>
+      <td class="metric">CPC Tráfico Sincelejo</td>
+      <td class="num">$95.4</td>
+      <td class="num">$41.9</td>
+      <td class="num better">↓ -56%</td>
+    </tr>
+    <tr>
+      <td class="metric" style="font-weight:700;color:#e2e8f0">Conversaciones WhatsApp</td>
+      <td class="num" style="font-weight:700">434</td>
+      <td class="num" style="font-weight:700">361</td>
+      <td class="num worse" style="font-weight:700">↓ -17%</td>
+    </tr>
+    <tr>
+      <td class="metric">Costo por conversación WA</td>
+      <td class="num">$2,309</td>
+      <td class="num">$2,159</td>
+      <td class="num better">↓ -7% más barato</td>
+    </tr>
+  </table>
+
+  <div class="charts-2">
+    <div class="chart-card">
+      <h3>Gasto Columna Vital — Quincena</h3>
+      <canvas id="chartGastoCV" height="180"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>CTR y CPC — Columna Vital</h3>
+      <canvas id="chartEficCV" height="180"></canvas>
+    </div>
+  </div>
+
+  <!-- FUNDACIÓN VITAL -->
+  <div class="separator">
+    <div class="line"></div>
+    <span class="tag tag-fv">FUNDACIÓN VITAL — Campaña Terapeutas (NUEVA)</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="kpi-grid-3">
+    <div class="kpi warn">
+      <div class="label">Gasto Mayo 1–15</div>
+      <div class="value">$178,663</div>
+      <div class="prev">Campaña nueva — sin abril</div>
+      <div class="change neu">Este es el gasto "extra"</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Alcance</div>
+      <div class="value">6,210</div>
+      <div class="prev">Audiencia muy específica</div>
+      <div class="change warn">Nicho pequeño</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Conversaciones WA</div>
+      <div class="value">158</div>
+      <div class="prev">Costo/conv: $1,131</div>
+      <div class="change up">Razonable para este nicho</div>
+    </div>
+  </div>
+
+  <table class="comp-table">
+    <tr>
+      <th>Métrica</th>
+      <th style="text-align:right">Abr 1–15</th>
+      <th style="text-align:right">May 1–15</th>
+      <th style="text-align:right">Nota</th>
+    </tr>
+    <tr>
+      <td class="metric">Gasto</td>
+      <td class="num same">—</td>
+      <td class="num">$178,663</td>
+      <td class="num warn">Campaña nueva en mayo</td>
+    </tr>
+    <tr>
+      <td class="metric">CTR</td>
+      <td class="num same">—</td>
+      <td class="num">6.24%</td>
+      <td class="num better">Buen engagement</td>
+    </tr>
+    <tr>
+      <td class="metric">CPC</td>
+      <td class="num same">—</td>
+      <td class="num">$253.8</td>
+      <td class="num warn">El más alto — audiencia pequeña</td>
+    </tr>
+    <tr>
+      <td class="metric">Conversaciones WA</td>
+      <td class="num same">—</td>
+      <td class="num">158</td>
+      <td class="num neu">Evaluar cierres primero</td>
+    </tr>
+  </table>
+
+  <!-- GASTO TOTAL COMPARADO -->
+  <div class="separator">
+    <div class="line"></div>
+    <span class="tag tag-cv" style="background:#8b5cf622;color:#8b5cf6;border-color:#8b5cf644">GASTO TOTAL — Quincena</span>
+    <div class="line"></div>
+  </div>
+
+  <div class="charts-2">
+    <div class="chart-card">
+      <h3>¿Dónde fue el gasto en cada quincena?</h3>
+      <canvas id="chartGastoTotal" height="200"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Conversaciones WhatsApp por campaña</h3>
+      <canvas id="chartConvs" height="200"></canvas>
+    </div>
+  </div>
+
+  <!-- CONCLUSIONES -->
+  <div class="section-title">Conclusiones y Recomendaciones</div>
+
+  <div class="insight bad">
+    <div class="ico">📉</div>
+    <div>
+      <strong>El presupuesto de Columna Vital bajó $222K en la primera quincena</strong>
+      <span>Se invirtió $1,002,230 en Abr 1-15 vs $779,603 en May 1-15. Ese recorte directamente redujo el alcance y las conversaciones de ventas.</span>
+    </div>
+  </div>
+
+  <div class="insight bad">
+    <div class="ico">💬</div>
+    <div>
+      <strong>Conversaciones de Columna Vital bajaron 17% — ventas bajaron 40%</strong>
+      <span>La brecha entre -17% en chats y -40% en ventas sugiere que el <strong>equipo de ventas también cerró menos</strong>. No es solo el anuncio — hay un problema de cierre.</span>
+    </div>
+  </div>
+
+  <div class="insight good">
+    <div class="ico">🚀</div>
+    <div>
+      <strong>Los anuncios están funcionando MEJOR que en abril</strong>
+      <span>CTR +73%, CPC -38%, costo por conversación -7%. El algoritmo y los creativos están optimizados. El problema no es la pauta.</span>
+    </div>
+  </div>
+
+  <div class="insight warn">
+    <div class="ico">⚠️</div>
+    <div>
+      <strong>Fundación Vital necesita más datos antes de escalar</strong>
+      <span>158 conversaciones en 15 días con $178K invertidos. Hay que ver cuántos cerraron para calcular si el costo por venta justifica seguir.</span>
+    </div>
+  </div>
+
+  <div class="insight info">
+    <div class="ico">✅</div>
+    <div>
+      <strong>Recomendación para la segunda quincena de mayo</strong>
+      <span>1) Subir presupuesto de IG Sincelejo a $850K–$1M para recuperar volumen. 2) Evaluar cierres de Terapeutas antes de escalar. 3) Revisar con el equipo de ventas el proceso de seguimiento de los chats de WhatsApp.</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">ClaudePM · Columna Vital 2 · act_1580150792635428 · Mayo 2026</div>
+
+<script>
+const opt = {
+  plugins: { legend: { labels: { color:'#94a3b8', font:{size:11} } } },
+  scales: {
+    x: { ticks:{color:'#64748b'}, grid:{color:'#2d374830'} },
+    y: { ticks:{color:'#64748b'}, grid:{color:'#2d374830'} }
+  }
+};
+
+// Gasto CV quincena
+new Chart(document.getElementById('chartGastoCV'),{
+  type:'bar',
+  data:{
+    labels:['Abr 1-15','May 1-15'],
+    datasets:[
+      {label:'IG Sincelejo', data:[805086,625493], backgroundColor:'#3b82f6aa', borderRadius:6},
+      {label:'Tráfico Sincelejo', data:[197144,154110], backgroundColor:'#8b5cf6aa', borderRadius:6}
+    ]
+  },
+  options:{...opt, plugins:{...opt.plugins, tooltip:{callbacks:{label:c=>'$'+c.raw.toLocaleString()}}}}
+});
+
+// CTR y CPC CV
+new Chart(document.getElementById('chartEficCV'),{
+  type:'bar',
+  data:{
+    labels:['CTR IG Abr','CTR IG May','CTR Tráf Abr','CTR Tráf May'],
+    datasets:[{
+      label:'CTR %',
+      data:[3.31,4.34,2.81,6.26],
+      backgroundColor:['#3b82f655','#22c55eaa','#3b82f655','#22c55eaa'],
+      borderColor:['#3b82f6','#22c55e','#3b82f6','#22c55e'],
+      borderWidth:2, borderRadius:6
+    }]
+  },
+  options:{...opt,scales:{...opt.scales,y:{...opt.scales.y,ticks:{color:'#64748b',callback:v=>v+'%'}}}}
+});
+
+// Gasto total stacked
+new Chart(document.getElementById('chartGastoTotal'),{
+  type:'bar',
+  data:{
+    labels:['Abr 1-15','May 1-15'],
+    datasets:[
+      {label:'Columna Vital', data:[1002230,779603], backgroundColor:'#3b82f6aa', borderRadius:6},
+      {label:'Fundación Vital', data:[0,178663], backgroundColor:'#f59e0baa', borderRadius:6}
+    ]
+  },
+  options:{...opt,plugins:{...opt.plugins,tooltip:{callbacks:{label:c=>'$'+c.raw.toLocaleString()}}}}
+});
+
+// Conversaciones
+new Chart(document.getElementById('chartConvs'),{
+  type:'bar',
+  data:{
+    labels:['Abr 1-15','May 1-15'],
+    datasets:[
+      {label:'Columna Vital (WA)', data:[434,361], backgroundColor:'#3b82f6aa', borderRadius:6},
+      {label:'Fundación Vital (WA)', data:[0,158], backgroundColor:'#f59e0baa', borderRadius:6}
+    ]
+  },
+  options:{...opt}
+});
+</script>
+</body>
+</html>
